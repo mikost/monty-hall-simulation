@@ -1,8 +1,8 @@
 package name.mikkoostlund.montyhall.show;
 
 /**
- * An instance of MontyShow is an 'engine' for a Monty Hall show.
- * A show is run by invocation of method {@link #runShow(ShowContestant)}.   
+ * A MontyShow is an 'engine' for a Monty Hall show. 
+ * A single show is run by invocation of method {@link #runShow(ShowContestant)}.   
  * @author mikko
  * 
  */

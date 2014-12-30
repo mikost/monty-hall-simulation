@@ -3,8 +3,8 @@ package name.mikkoostlund.montyhall.simulation;
 public class MontySimMain {
 
 	public static void main(String[] args) {
-		MontySimulation montySimulation = new MontySimulation();
-		RunStatistics stat = montySimulation.run(1000);
+		MontySimulationsRunner montySimulationsRunner = new MontySimulationsRunner();
+		RunStatistics stat = montySimulationsRunner.run(1000);
 		presentStatistics(stat);
 	}
 
