@@ -15,11 +15,6 @@ import org.junit.Test;
 public class MontyExperimentTest {
 
 	@Test
-	public void testMontyExperiment() {
-		fail("Not yet implemented");
-	}
-
-	@Test
 	public void testThatItRunsShowWithAllPassedInContestantsTheCorrectNumberOfTimes() {
 		ShowStub showStub = new ShowStub();
 		showStub.setStubbedOutcome(ShowOutcome.WIN);
