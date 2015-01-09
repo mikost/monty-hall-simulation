@@ -1,4 +1,5 @@
-package name.mikkoostlund.montyhall.show;
+package com.monty.minisimulation;
+
 
 /**
  * A <code>DoorMatcher</code> instance either matches or doesn't match a <code>Door</code>

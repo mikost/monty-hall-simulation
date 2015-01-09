@@ -1,14 +1,29 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>name.mikkoostlund.montyhall</groupId>
-  <artifactId>simulation</artifactId>
+  <groupId>com.monty</groupId>
+  <artifactId>mini-simulation</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>Monty Hall simulation</name>
-  <description>A program that verifies that it is statistically beneficial to switch doors in the Monty Hall problem.</description>
+  <description>A simulation of the Monty Hall show</description>
+
+  <scm><!-- git@github.com:mike-ensor/clickconcepts-master-pom.git -->
+    <connection>scm:git:ssh://github.com/mikost/monty-hall-simulation.git</connection>
+    <url>https://github.com/mikost/monty-hall-simulation</url>
+    <developerConnection>scm:git:ssh://github.com/mikost/monty-hall-simulation.git
+    </developerConnection>
+    <tag>HEAD</tag>
+  </scm>
 
   <properties>
   	<maven.compiler.source>1.7</maven.compiler.source>
   	<maven.compiler.target>1.7</maven.compiler.target>
+	<scm-publish.checkoutDirectory>xxx</scm-publish.checkoutDirectory>
+	<scm-publish.scmBranch>gh-pages</scm-publish.scmBranch>  
+	<scm-publish.pubScmUrl>scm:git:git@github.com:mikost/monty-hall-simulation.git</scm-publish.pubScmUrl>
+	<scm-publish.siteDocOuputDirectory>${project.build.directory}/site</scm-publish.siteDocOuputDirectory>
+	<scm-publish.username>mikost</scm-publish.username>
+	<scm-publish.password>XXX</scm-publish.password>
+	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
 
   <dependencies>
@@ -22,14 +37,92 @@
 
   <build>
     <plugins>
-        <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>1.2.1</version>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>2.18.1</version>
+        <executions>
+          <execution>
+            <id></id>
+            <phase>integration-test</phase>
+            <goals>
+              <goal>integration-test</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.7.2.201409121644</version>
+        <executions>
+		  <execution>
+            <id>default-prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+          	<id>default-report</id>
+          	<phase>prepare-package</phase>
+          	<goals>
+          		<goal>report</goal>
+          	</goals>
+            <configuration>
+          	  <excludes>
+                <exclude>com/monty/minisimulation/MontyMain.class</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+          <execution>
+            <id>default-check</id>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+          	  <excludes>
+                <exclude>com/monty/minisimulation/MontyMain.class</exclude>
+              </excludes>
+              <rules>
+                <rule>
+                  <element>BUNDLE</element>
+                  <limits>
+                    <limit>
+                      <counter>COMPLEXITY</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.60</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-scm-publish-plugin</artifactId>
         <configuration>
-          <mainClass>name.mikkoostlund.montyhall.simulation.MontySimMain</mainClass>
+          <scmBranch>gh-pages</scmBranch>
+          <pubScmUrl>scm:git:git@github.com:mikost/monty-hall-simulation.git</pubScmUrl>
+	      <content>${project.build.directory}/site</content>
+          <skipDeletedFiles>true</skipDeletedFiles>
         </configuration>
       </plugin>
     </plugins>
   </build>
+<!--   <distributionManagement> -->
+<!--     <site> -->
+<!--       <id></id> -->
+<!--       <url></url> -->
+<!--     </site> -->
+<!--   </distributionManagement> -->
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <version>3.0.0</version>
+      </plugin>
+    </plugins>
+  </reporting>
+  
 </project>

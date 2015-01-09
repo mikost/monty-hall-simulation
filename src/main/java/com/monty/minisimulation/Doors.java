@@ -1,14 +1,14 @@
-package name.mikkoostlund.montyhall.show;
+package com.monty.minisimulation;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 /**
  * A Doors instance abstracts the set of doors in a Monty Hall show.
- * A Doors instance contains three instances of {@link Door}, where 
+ * A Doors instance contains instances of {@link Door}, where 
  * exactly one Door "has a car" (its {@link Door#hasCar() hasCar} method returns <code>true</code>) 
  * and each of the remaining ones "has a goat" (its {@link Door#hasCar() hasCar} method 
  * returns <code>false</code>).
@@ -17,7 +17,7 @@ import java.util.NoSuchElementException;
  */
 public class Doors  {
 
-	private final List<Door> doors;
+	private final List<Door> doors = new ArrayList<>();
 
 	/**
 	 * Constructs a <code>Doors</code> instance
@@ -29,41 +29,64 @@ public class Doors  {
 	 * refer to the same <code>Door</code> instance or if not
 	 * exactly one of the <code>Door</code>s "has a car behind it".
 	 */
-	public Doors(Door door0, Door door1, Door door2) {
-		doors = Collections.unmodifiableList(Arrays.asList(door0, door1, door2));
-		validate();
+	public Doors(String dummy, final int indexOfDoorWithCar, int numberOfDoors) {
+		validate(numberOfDoors, indexOfDoorWithCar);
+
+		for (int i = 0; i < numberOfDoors; i++) {
+			final int doorIndex = i;
+			doors.add(new Door() {
+				
+				@Override
+				public int index() {
+					return doorIndex;
+				}
+				
+				@Override
+				public boolean hasCar() {
+					return doorIndex == indexOfDoorWithCar;
+				}
+			});
+		}
+
+		assert checkInvariant();
 	}
 
-	private void validate() {
-		validateNotNull();
-		validateDistinct();
-		validateExactlyOneHasCar();
+	private void validate(int numberOfDoors, final int indexOfCarDoor) {
+		if (indexOfCarDoor < 0 || indexOfCarDoor >= numberOfDoors) {
+			throw new IllegalArgumentException("indexOfCarDoor = "+ indexOfCarDoor +", numberOfDoors = "+ numberOfDoors +"; required: 0 <= indexOfCarDoor < numberOfDoors");
+		}
 	}
 
-	private void validateNotNull() {
+	private boolean checkInvariant() {
+		return checkNoNullDoors()
+				&& checkDistinct()
+				&& checkExactlyOneHasCar();
+	}
+
+	private boolean checkNoNullDoors() {
 		for (Door door: doors) {
-			if (door == null) throw new NullPointerException(); 
+			if (door == null) return false; 
 		}
+		return true;
 	}
 
-	private void validateDistinct() {
-		HashSet<Door> hashSet = new HashSet<Door>();
-		hashSet.addAll(doors);
-		if (hashSet.size() != doors.size()) {
-			throw new IllegalArgumentException("not all were distinct");
+	private boolean checkDistinct() {
+		Set<Door> set = new HashSet<>();
+		set.addAll(doors);
+		if (set.size() != doors.size()) {
+			return false;
 		}
+		return true;
 	}
 
-	private void validateExactlyOneHasCar() {
+	private boolean checkExactlyOneHasCar() {
 		int cars = 0;
 		for (Door door : doors) {
 			if (door.hasCar()) {
 				cars++;
 			}
 		}
-		if (cars != 1) {
-			throw new IllegalArgumentException("tried to create "+ this.getClass().getSimpleName() +" with "+ cars +" cars; there must be exactly one car");
-		}
+		return (cars == 1);
 	}
 
 	/**
@@ -101,5 +124,15 @@ public class Doors  {
 	 */
 	public Door getDoor(int index) {
 		return doors.get(index);
+	}
+
+	public List<Integer> getDoorIndexes(DoorMatcher doorMatcher) {
+		List <Integer> doorIndexes = new ArrayList<>();
+		for (int i = 0; i < doors.size(); i++) {
+			if (doorMatcher.matches(doors.get(i))) {
+				doorIndexes.add(i);
+			}
+		}
+		return doorIndexes;
 	}
 }

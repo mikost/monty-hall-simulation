@@ -1,4 +1,4 @@
-package name.mikkoostlund.montyhall.show;
+package com.monty.minisimulation;
 
 /**
  * A ShowHelper is responsible for setting up a set of doors for a Monty Hall show.
@@ -11,6 +11,6 @@ public interface ShowHelper {
 	/**
 	 * @return an instance of type {@link Doors}</a>
 	 */
-	Doors setupDoors();
+	Doors setupDoors(int numberOfDoors);
 
 }
