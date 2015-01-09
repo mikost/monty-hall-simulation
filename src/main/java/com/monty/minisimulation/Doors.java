@@ -48,7 +48,7 @@ public class Doors  {
 			});
 		}
 
-		assert checkInvariant();
+		assertInvariant();
 	}
 
 	private void validate(int numberOfDoors, final int indexOfCarDoor) {
@@ -57,36 +57,32 @@ public class Doors  {
 		}
 	}
 
-	private boolean checkInvariant() {
-		return checkNoNullDoors()
-				&& checkDistinct()
-				&& checkExactlyOneHasCar();
+	private void assertInvariant() {
+		assertNoNullDoors();
+		assertDistinct();
+		assertExactlyOneHasCar();
 	}
 
-	private boolean checkNoNullDoors() {
+	private void assertNoNullDoors() {
 		for (Door door: doors) {
-			if (door == null) return false; 
+			assert door != null; 
 		}
-		return true;
 	}
 
-	private boolean checkDistinct() {
+	private void assertDistinct() {
 		Set<Door> set = new HashSet<>();
 		set.addAll(doors);
-		if (set.size() != doors.size()) {
-			return false;
-		}
-		return true;
+		assert set.size() == doors.size();
 	}
 
-	private boolean checkExactlyOneHasCar() {
+	private void assertExactlyOneHasCar() {
 		int cars = 0;
 		for (Door door : doors) {
 			if (door.hasCar()) {
 				cars++;
 			}
 		}
-		return (cars == 1);
+		assert cars == 1;
 	}
 
 	/**
