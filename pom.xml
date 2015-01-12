@@ -2,17 +2,24 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.monty</groupId>
   <artifactId>mini-simulation</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0-SNAPSHOT</version>
   <name>Monty Hall simulation</name>
   <description>A simulation of the Monty Hall show</description>
 
-  <scm><!-- git@github.com:mike-ensor/clickconcepts-master-pom.git -->
+  <scm>
     <connection>scm:git:ssh://github.com/mikost/monty-hall-simulation.git</connection>
     <url>https://github.com/mikost/monty-hall-simulation</url>
-    <developerConnection>scm:git:ssh://github.com/mikost/monty-hall-simulation.git
-    </developerConnection>
+    <developerConnection>scm:git:ssh://github.com/mikost/monty-hall-simulation.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
+
+  <distributionManagement>
+    <repository>
+      <id>bintray-mikost-maven-monty-hall-simulation</id>
+      <name>mikost-maven-monty-hall-simulation</name>
+      <url>https://api.bintray.com/maven/mikost/maven/monty-hall-simulation</url>
+    </repository>
+  </distributionManagement>
 
   <properties>
   	<maven.compiler.source>1.7</maven.compiler.source>
@@ -35,6 +42,21 @@
 
   <build>
     <plugins>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <version>2.1</version>
+      </plugin>
+
+      <plugin>
+        <artifactId>maven-scm-plugin</artifactId>
+        <version>1.8.1</version>
+        <configuration>
+          <tag>${project.artifactId}-${project.version}</tag>
+        </configuration>
+      </plugin>
+      
       <plugin>
         <artifactId>maven-failsafe-plugin</artifactId>
         <version>2.18.1</version>
