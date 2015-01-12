@@ -17,12 +17,10 @@
   <properties>
   	<maven.compiler.source>1.7</maven.compiler.source>
   	<maven.compiler.target>1.7</maven.compiler.target>
-	<scm-publish.checkoutDirectory>xxx</scm-publish.checkoutDirectory>
 	<scm-publish.scmBranch>gh-pages</scm-publish.scmBranch>  
 	<scm-publish.pubScmUrl>scm:git:git@github.com:mikost/monty-hall-simulation.git</scm-publish.pubScmUrl>
 	<scm-publish.siteDocOuputDirectory>${project.build.directory}/site</scm-publish.siteDocOuputDirectory>
-	<scm-publish.username>mikost</scm-publish.username>
-	<scm-publish.password>XXX</scm-publish.password>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
 
@@ -56,16 +54,36 @@
         <version>0.7.2.201409121644</version>
         <executions>
 		  <execution>
-            <id>default-prepare-agent</id>
+            <id>prepare-agent</id>
+            <phase>initialize</phase>
             <goals>
               <goal>prepare-agent</goal>
             </goals>
           </execution>
           <execution>
-          	<id>default-report</id>
+          	<id>report</id>
           	<phase>prepare-package</phase>
           	<goals>
-          		<goal>report</goal>
+              <goal>report</goal>
+          	</goals>
+            <configuration>
+          	  <excludes>
+                <exclude>com/monty/minisimulation/MontyMain.class</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+		  <execution>
+            <id>prepare-agent-integration</id>
+            <phase>pre-integration-test</phase>
+            <goals>
+              <goal>prepare-agent-integration</goal>
+            </goals>
+          </execution>
+          <execution>
+          	<id>report-integration</id>
+          	<phase>post-integration-test</phase>
+          	<goals>
+              <goal>report-integration</goal>
           	</goals>
             <configuration>
           	  <excludes>
@@ -74,11 +92,40 @@
             </configuration>
           </execution>
           <execution>
-            <id>default-check</id>
+            <id>check</id>
+            <phase>verify</phase>
             <goals>
               <goal>check</goal>
             </goals>
             <configuration>
+          	  <excludes>
+                <exclude>com/monty/minisimulation/MontyMain.class</exclude>
+              </excludes>
+              <rules>
+                <rule>
+                  <element>BUNDLE</element>
+                  <limits>
+                    <limit>
+                      <counter>COMPLEXITY</counter>
+                      <value>COVEREDRATIO</value>
+                      <minimum>0.50</minimum>
+                    </limit>
+                  </limits>
+                </rule>
+              </rules>
+            </configuration>
+          </execution>
+
+          <execution>
+            <id>check-integration</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+            <dataFile>
+              ${project.build.directory}/jacoco-it.exec
+            </dataFile>
           	  <excludes>
                 <exclude>com/monty/minisimulation/MontyMain.class</exclude>
               </excludes>
@@ -100,27 +147,47 @@
       </plugin>
       <plugin>
         <artifactId>maven-scm-publish-plugin</artifactId>
+        <version>1.1</version>
         <configuration>
-          <scmBranch>gh-pages</scmBranch>
-          <pubScmUrl>scm:git:git@github.com:mikost/monty-hall-simulation.git</pubScmUrl>
-	      <content>${project.build.directory}/site</content>
+          <scmBranch>${scm-publish.scmBranch}</scmBranch>
+          <pubScmUrl>${scm-publish.pubScmUrl}</pubScmUrl>
+	      <content>${scm-publish.siteDocOuputDirectory}</content>
           <skipDeletedFiles>true</skipDeletedFiles>
         </configuration>
       </plugin>
-    </plugins>
-  </build>
-<!--   <distributionManagement> -->
-<!--     <site> -->
-<!--       <id></id> -->
-<!--       <url></url> -->
-<!--     </site> -->
-<!--   </distributionManagement> -->
-  <reporting>
-    <plugins>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>
         <version>3.0.0</version>
+        <executions>
+          <execution>
+            <id>findbugs</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>findbugs</goal>
+            </goals>
+          </execution>
+		</executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>2.7</version>
+      </plugin>    
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <version>3.0.0</version>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.7.2.201409121644</version>
       </plugin>
     </plugins>
   </reporting>

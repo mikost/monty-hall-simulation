@@ -3,16 +3,18 @@ package com.monty.minisimulation;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
-
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.junit.Test;
 
-public class MontyExperimentTest {
+import com.monty.minisimulation.MontyExperiment.ShowStatistics;
+
+public class MontyExperimentIT {
 
 	@Test
 	public void testThatItRunsShowWithAllPassedInContestantsTheCorrectNumberOfTimes() {
@@ -35,6 +37,72 @@ public class MontyExperimentTest {
 		for (ContestantStub contestantStub: contestantStubs) {
 			assertThat("number of shows run with contestant "+ contestantStub.id, showStub.numberOfShowsRunWith(contestantStub), is(equalTo(numberOfTimesToRunShowForEachContestant)));
 		}
+	}
+
+	@Test
+	public void testIt() {
+		final int wantedNumberOfDoors = 3;
+		int timesToRunShow = 999;
+
+		Show show = new DefaultShowImpl(new ShowHelper() {
+
+			private int indexOfDoorWithCar = 0;
+
+			@Override
+			public Doors setupDoors(int numberOfDoors) {
+				assertThat(numberOfDoors, is(equalTo(wantedNumberOfDoors)));
+				Doors doors = new Doors(null, indexOfDoorWithCar, numberOfDoors);
+				indexOfDoorWithCar ++;
+				if (indexOfDoorWithCar == wantedNumberOfDoors) {
+					indexOfDoorWithCar = 0;
+				}
+				return doors;
+			}
+			
+		}, wantedNumberOfDoors);
+
+		ShowContestant switching = new ShowContestant() {
+
+			@Override
+			public int makeInitialDoorChoice(List<Integer> doorIndexes) {
+				return 0;
+			}
+
+			@Override
+			public int makeSecondDoorChoice(int initialDoorChoice, List<Integer> doorIndexesAllowedToChangeTo) {
+				assertThat(doorIndexesAllowedToChangeTo.size(), is(equalTo(1)));
+				return doorIndexesAllowedToChangeTo.get(0);
+			}
+			
+		};
+
+		ShowContestant keeping = new ShowContestant() {
+
+			@Override
+			public int makeInitialDoorChoice(List<Integer> doorIndexes) {
+				return 0;
+			}
+
+			@Override
+			public int makeSecondDoorChoice(int initialDoorChoice, List<Integer> doorIndexesAllowedToChangeTo) {
+				return 0;
+			}
+			
+		};
+
+		Collection<ShowContestant> showContestants = Arrays.asList(
+				switching,
+				keeping
+		);
+
+		MontyExperiment montyExperiment = new MontyExperiment(show, timesToRunShow, showContestants);
+
+		ShowStatistics showStatistics = montyExperiment.run();
+
+		assertThat("Number of times switching contestant took part in show", showStatistics.getShowCount(switching), is(equalTo(timesToRunShow)));
+		assertThat("Number of times switching contestant won", showStatistics.getOutcomeCount(ShowOutcome.WIN, switching), is(equalTo(666)));
+		assertThat("Number of times keeping contestant took part in show", showStatistics.getShowCount(keeping), is(equalTo(timesToRunShow)));
+		assertThat("Number of times keeping contestant won", showStatistics.getOutcomeCount(ShowOutcome.WIN, keeping), is(equalTo(333)));
 	}
 
 	private List<ContestantStub> generateContestants(int numberOfContestants) {
