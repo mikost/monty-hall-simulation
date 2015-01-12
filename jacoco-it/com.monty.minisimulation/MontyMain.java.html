@@ -7,27 +7,27 @@ import java.util.Random;
 
 import com.monty.minisimulation.MontyExperiment.ShowStatistics;
 
-public class MontyMain {
+<span class="nc" id="L10">public class MontyMain {</span>
 
 	private static final int NUMBER_OF_DOORS = 3;
 	private static final int DEFAULT_TIMES = 1000;
 
 	public static void main(String[] args) {
-		int timesToRunShow = parse(args).getTimesToRunShow();
+<span class="nc" id="L16">		int timesToRunShow = parse(args).getTimesToRunShow();</span>
 
-		Show show = new DefaultShowImpl(new DefaultShowHelper(), NUMBER_OF_DOORS);
+<span class="nc" id="L18">		Show show = new DefaultShowImpl(new DefaultShowHelper(), NUMBER_OF_DOORS);</span>
 
-		Collection&lt;ShowContestantBase&gt; showContestants = Arrays.asList(
+<span class="nc" id="L20">		Collection&lt;ShowContestantBase&gt; showContestants = Arrays.asList(</span>
 				new KeepingContestant(&quot;KEEPING_CONTESTANT&quot;),
 				new SwitchingContestant(&quot;SWITCHING_CONTESTANT&quot;)
 		);
 
-		MontyExperiment montyExperiment = new MontyExperiment(show, timesToRunShow, showContestants);
+<span class="nc" id="L25">		MontyExperiment montyExperiment = new MontyExperiment(show, timesToRunShow, showContestants);</span>
 
-		ShowStatistics showStatistics = montyExperiment.run();
+<span class="nc" id="L27">		ShowStatistics showStatistics = montyExperiment.run();</span>
 
-		presentStatistics(showStatistics, showContestants);
-	}
+<span class="nc" id="L29">		presentStatistics(showStatistics, showContestants);</span>
+<span class="nc" id="L30">	}</span>
 
 	private interface Args {
 
@@ -38,12 +38,12 @@ public class MontyMain {
 	private static Args parse(String[] args) {
 		final int timesToRunShow;
 
-		switch (args.length) {
-		case 0: timesToRunShow = DEFAULT_TIMES;                break;
-		case 1:	timesToRunShow = parseNonNegativeInt(args[0]); break;
+<span class="nc bnc" id="L41" title="All 3 branches missed.">		switch (args.length) {</span>
+<span class="nc" id="L42">		case 0: timesToRunShow = DEFAULT_TIMES;                break;</span>
+<span class="nc" id="L43">		case 1:	timesToRunShow = parseNonNegativeInt(args[0]); break;</span>
 
 		default:
-			throw new IllegalArgumentException(&quot;Found &quot;+ args.length +&quot; arguments; expected 0 or 1 argument.&quot;);
+<span class="nc" id="L46">			throw new IllegalArgumentException(&quot;Found &quot;+ args.length +&quot; arguments; expected 0 or 1 argument.&quot;);</span>
 		}
 
 <span class="nc" id="L49">		return new Args() {</span>
@@ -58,14 +58,14 @@ public class MontyMain {
 	private static int parseNonNegativeInt(String intString) {
 		final int timesToRunShow;
 		try {	
-			timesToRunShow = Integer.parseInt(intString);
-		} catch (NumberFormatException e) {
-			throw new IllegalArgumentException(&quot;Found &quot;+ intString +&quot;; expected an integer.&quot;, e);
+<span class="nc" id="L61">			timesToRunShow = Integer.parseInt(intString);</span>
+<span class="nc" id="L62">		} catch (NumberFormatException e) {</span>
+<span class="nc" id="L63">			throw new IllegalArgumentException(&quot;Found &quot;+ intString +&quot;; expected an integer.&quot;, e);</span>
+<span class="nc" id="L64">		}</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">		if (timesToRunShow &lt; 0) {</span>
+<span class="nc" id="L66">			throw new IllegalArgumentException(&quot;Found &quot;+ intString +&quot;; expected a non-negative integer.&quot;);</span>
 		}
-		if (timesToRunShow &lt; 0) {
-			throw new IllegalArgumentException(&quot;Found &quot;+ intString +&quot;; expected a non-negative integer.&quot;);
-		}
-		return timesToRunShow;
+<span class="nc" id="L68">		return timesToRunShow;</span>
 	}
 
 	private static abstract class ShowContestantBase implements ShowContestant {
@@ -99,7 +99,7 @@ public class MontyMain {
 		}		
 	}
 
-	private static class SwitchingContestant extends ShowContestantBase {
+<span class="nc" id="L102">	private static class SwitchingContestant extends ShowContestantBase {</span>
 
 		SwitchingContestant(String description) {
 <span class="nc" id="L105">			super(description);</span>
@@ -117,20 +117,20 @@ public class MontyMain {
 
 	private static void presentStatistics(ShowStatistics showStatistics, Collection&lt;ShowContestantBase&gt; showContestants) {
 
-		int maxNumberOfWins = -1;
-		ShowContestantBase bestContestant = null;
-		for (ShowContestantBase showContestant : showContestants) {
-			int numberOfWins = showStatistics.getOutcomeCount(ShowOutcome.WIN, showContestant);
-			if (numberOfWins &gt; maxNumberOfWins) {
-				maxNumberOfWins = numberOfWins;
-				bestContestant = showContestant;
+<span class="nc" id="L120">		int maxNumberOfWins = -1;</span>
+<span class="nc" id="L121">		ShowContestantBase bestContestant = null;</span>
+<span class="nc bnc" id="L122" title="All 2 branches missed.">		for (ShowContestantBase showContestant : showContestants) {</span>
+<span class="nc" id="L123">			int numberOfWins = showStatistics.getOutcomeCount(ShowOutcome.WIN, showContestant);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">			if (numberOfWins &gt; maxNumberOfWins) {</span>
+<span class="nc" id="L125">				maxNumberOfWins = numberOfWins;</span>
+<span class="nc" id="L126">				bestContestant = showContestant;</span>
 			}
 
-			System.out.println(&quot;Result for contestant \&quot;&quot;+ showContestant.getDescription() +&quot;\&quot;:&quot;);
-			System.out.println(&quot;  - took part in &quot;+ showStatistics.getShowCount(showContestant) +&quot; shows&quot;);
-			System.out.println(&quot;  - won in &quot;+ numberOfWins +&quot; shows&quot;);
-		}
-		System.out.println(&quot;Best result was obtained by contestant \&quot;&quot;+ bestContestant.getDescription());
-	}
+<span class="nc" id="L129">			System.out.println(&quot;Result for contestant \&quot;&quot;+ showContestant.getDescription() +&quot;\&quot;:&quot;);</span>
+<span class="nc" id="L130">			System.out.println(&quot;  - took part in &quot;+ showStatistics.getShowCount(showContestant) +&quot; shows&quot;);</span>
+<span class="nc" id="L131">			System.out.println(&quot;  - won in &quot;+ numberOfWins +&quot; shows&quot;);</span>
+<span class="nc" id="L132">		}</span>
+<span class="nc" id="L133">		System.out.println(&quot;Best result was obtained by contestant \&quot;&quot;+ bestContestant.getDescription());</span>
+<span class="nc" id="L134">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>
