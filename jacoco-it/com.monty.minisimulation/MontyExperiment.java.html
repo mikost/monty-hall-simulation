@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MontyExperiment.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Monty Hall simulation</a> &gt; <a href="index.source.html" class="el_package">com.monty.minisimulation</a> &gt; <span class="el_source">MontyExperiment.java</span></div><h1>MontyExperiment.java</h1><pre class="source lang-java linenums">package com.monty.minisimulation;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+public class MontyExperiment {
+
+	public interface ShowStatistics {
+
+		int getOutcomeCount(ShowOutcome showOutcome, ShowContestant showContestant);
+
+		int getShowCount(ShowContestant showContestant);
+
+	}
+
+	private final Show show;
+	private final int times;
+	private final Collection&lt;? extends ShowContestant&gt; showContestants;
+
+<span class="fc" id="L21">	public MontyExperiment(Show show, int times, Collection&lt;? extends ShowContestant&gt; showContestants) {</span>
+<span class="fc" id="L22">		this.show = show;</span>
+<span class="fc" id="L23">		this.times = times;</span>
+<span class="fc" id="L24">		this.showContestants = showContestants;</span>
+<span class="fc" id="L25">	}</span>
+
+	public ShowStatistics run() {
+<span class="fc" id="L28">		Registrator registrator = new Registrator();</span>
+
+<span class="fc bfc" id="L30" title="All 2 branches covered.">		for (ShowContestant showContestant : showContestants) {	</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">			for (int time = 0; time &lt; times; time++) {</span>
+<span class="fc" id="L32">				ShowOutcome showOutcome = show.runWith(showContestant);</span>
+<span class="fc" id="L33">				registrator.registerOutcome(showContestant, showOutcome);</span>
+			}
+<span class="fc" id="L35">		}</span>
+		
+<span class="fc" id="L37">		return registrator.getShowStatistics();</span>
+	}
+
+<span class="fc" id="L40">	private static class Registrator {</span>
+<span class="fc" id="L41">		private final Map&lt;ShowContestant, ContestantStatistics&gt; statistics = new HashMap&lt;&gt;();</span>
+
+		public void registerOutcome(ShowContestant showContestant, ShowOutcome showOutcome) {
+<span class="fc" id="L44">			ContestantStatistics contestantStatistics = statistics.get(showContestant);</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">			if (contestantStatistics == null) {</span>
+<span class="fc" id="L46">				contestantStatistics = new ContestantStatistics();</span>
+<span class="fc" id="L47">				statistics.put(showContestant, contestantStatistics);</span>
+			}
+<span class="fc" id="L49">			contestantStatistics.registerOutcome(showOutcome);</span>
+<span class="fc" id="L50">		}</span>
+
+		public ShowStatistics getShowStatistics() {
+<span class="fc" id="L53">			return new ShowStatistics() {</span>
+
+				@Override
+				public int getOutcomeCount(ShowOutcome showOutcome, ShowContestant showContestant) {
+<span class="fc" id="L57">					ContestantStatistics contestantStatistics = statistics.get(showContestant);</span>
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">					if (contestantStatistics == null) {</span>
+<span class="nc" id="L59">						return 0;</span>
+					}
+<span class="fc" id="L61">					return contestantStatistics.getOutcomeCount(showOutcome);</span>
+				}
+
+				@Override
+				public int getShowCount(ShowContestant showContestant) {
+<span class="fc" id="L66">					ContestantStatistics contestantStatistics = statistics.get(showContestant);</span>
+<span class="pc bpc" id="L67" title="1 of 2 branches missed.">					if (contestantStatistics == null) {</span>
+<span class="nc" id="L68">						return 0;</span>
+					}
+<span class="fc" id="L70">					return contestantStatistics.getShowCount();</span>
+				}
+				
+			};
+		}
+
+<span class="fc" id="L76">		private static class ContestantStatistics {</span>
+
+<span class="fc" id="L78">			private final HashMap&lt;ShowOutcome, Integer&gt; outcomes = new HashMap&lt;&gt;();</span>
+
+			public int getShowCount() {
+<span class="fc" id="L81">				int showCount = 0;</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">				for (ShowOutcome showOutcome : outcomes.keySet()) {</span>
+<span class="fc" id="L83">					showCount += outcomes.get(showOutcome).intValue();</span>
+<span class="fc" id="L84">				}</span>
+<span class="fc" id="L85">				return showCount;</span>
+			}
+
+			public int getOutcomeCount(ShowOutcome showOutcome) {
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">				if (showOutcome == null) throw new NullPointerException();</span>
+
+<span class="fc" id="L91">				Integer count = outcomes.get(showOutcome);</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">				return count == null ? 0 : count.intValue();</span>
+			}
+
+			public void registerOutcome(ShowOutcome showOutcome) {
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">				if (showOutcome == null) throw new NullPointerException();</span>
+
+<span class="fc" id="L98">				Integer count = outcomes.get(showOutcome);</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">				if (count == null) {</span>
+<span class="fc" id="L100">					outcomes.put(showOutcome, 1);</span>
+				} else {
+<span class="fc" id="L102">					outcomes.put(showOutcome, count + 1);</span>
+				}
+<span class="fc" id="L104">			}</span>
+
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

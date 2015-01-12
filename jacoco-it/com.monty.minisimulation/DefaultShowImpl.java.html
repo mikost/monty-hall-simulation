@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DefaultShowImpl.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Monty Hall simulation</a> &gt; <a href="index.source.html" class="el_package">com.monty.minisimulation</a> &gt; <span class="el_source">DefaultShowImpl.java</span></div><h1>DefaultShowImpl.java</h1><pre class="source lang-java linenums">package com.monty.minisimulation;
+
+import java.util.List;
+
+public class DefaultShowImpl implements Show {
+
+	private ShowHelper showHelper;
+	private int numberOfDoors;
+
+	/**
+	 * Creates an instance of {@link MontyShow}.
+	 * @param showHelper
+	 * @param numberOfDoors 
+	 */
+<span class="fc" id="L15">	public DefaultShowImpl(ShowHelper showHelper, int numberOfDoors) {</span>
+<span class="fc" id="L16">		this.showHelper = showHelper;</span>
+<span class="fc" id="L17">		this.numberOfDoors = numberOfDoors;</span>
+<span class="fc" id="L18">	}</span>
+
+	/**
+	 * Runs a single show.
+	 * @param showContestant the contestant taking part in the show.
+	 * @param showWatcher a watcher which watches the show and receives information
+	 * about its outcome.
+	 * @param showHelper the guy that is responsible for setting up a set of doors; 
+	 * one door with a car behind, the remaing doors with goats behind.
+	 * @return the result of the show - either a {@link ShowResult#WIN} (meaning that the 
+	 * contestant won a car) or a {@link ShowResult#LOSE} (meaning that the contestant 
+	 * lost - although he &quot;won&quot; a goat).
+	 */
+	public ShowOutcome runWith(ShowContestant showContestant) {
+		/*
+		 *  Prepare for show time - set up the doors! 
+		 */
+<span class="fc" id="L35">		Doors doors = showHelper.setupDoors(numberOfDoors);</span>
+
+		// Let contestant choose a door.
+<span class="fc" id="L38">		int index = showContestant.makeInitialDoorChoice(doors.getDoorIndexes(DoorMatcher.anyDoor()));</span>
+<span class="fc" id="L39">		Door doorChosenByContestant = doors.getDoor(index);</span>
+
+		//  Host opens another door (than the one chosen by the contestant), which
+		//+ has a goat behind it.
+<span class="fc" id="L43">		Door doorOpenedByHost = doors.getDoor(DoorMatcher.doorWithGoat()</span>
+<span class="fc" id="L44">		                                                  .not(doorChosenByContestant));</span>
+
+		//  The remaining doors - i.e. all doors except the one chosen by the contestant 
+		//+ and the one opened by the host - are eligible for the contestant to switch to.
+<span class="fc" id="L48">		List&lt;Integer&gt; doorsThatContestantMaySwitchTo = </span>
+<span class="fc" id="L49">				doors.getDoorIndexes(DoorMatcher.anyDoor()</span>
+<span class="fc" id="L50">				                                .not(doorChosenByContestant)</span>
+<span class="fc" id="L51">				                                .not(doorOpenedByHost));</span>
+
+		// Let the contestant switch to the other door, if he wants.
+<span class="fc" id="L54">		int index2 = showContestant.makeSecondDoorChoice(doorChosenByContestant.index(), doorsThatContestantMaySwitchTo);</span>
+<span class="fc" id="L55">		doorChosenByContestant = doors.getDoor(index2);</span>
+
+		// If there is a goat behind the chosen door, the contestant lost.
+<span class="fc bfc" id="L58" title="All 2 branches covered.">		if (false == doorChosenByContestant.hasCar()) {</span>
+<span class="fc" id="L59">			return ShowOutcome.LOSE;</span>
+		}
+
+		// The contestant won a car!
+<span class="fc" id="L63">		return ShowOutcome.WIN;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>
