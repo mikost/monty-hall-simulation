@@ -1,4 +1,4 @@
-package com.monty.minisimulation;
+package name.mikkoostlund.montyhallsimulation;
 
 /**
  * A ShowHelper is responsible for setting up a set of doors for a Monty Hall show.

@@ -1,4 +1,4 @@
-package com.monty.minisimulation;
+package name.mikkoostlund.montyhallsimulation;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;

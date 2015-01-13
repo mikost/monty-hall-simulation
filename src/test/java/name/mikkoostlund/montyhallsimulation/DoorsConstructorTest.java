@@ -1,7 +1,7 @@
-package com.monty.minisimulation;
+package name.mikkoostlund.montyhallsimulation;
 
-import static com.monty.minisimulation.DoorsConstructorTest.ExceptionExpectation.EXPECT_OK;
-import static com.monty.minisimulation.DoorsConstructorTest.ExceptionExpectation.expect;
+import static name.mikkoostlund.montyhallsimulation.DoorsConstructorTest.ExceptionExpectation.EXPECT_OK;
+import static name.mikkoostlund.montyhallsimulation.DoorsConstructorTest.ExceptionExpectation.expect;
 
 import java.util.Arrays;
 import java.util.Collection;

@@ -1,8 +1,9 @@
-package com.monty.minisimulation;
+package name.mikkoostlund.montyhallsimulation;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -12,7 +13,7 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.monty.minisimulation.MontyExperiment.ShowStatistics;
+import name.mikkoostlund.montyhallsimulation.MontyExperiment.ShowStatistics;
 
 public class MontyExperimentIT {
 

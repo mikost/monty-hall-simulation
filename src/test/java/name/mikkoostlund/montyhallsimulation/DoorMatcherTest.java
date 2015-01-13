@@ -1,4 +1,4 @@
-package com.monty.minisimulation;
+package name.mikkoostlund.montyhallsimulation;
 
 import static org.junit.Assert.*;
 
