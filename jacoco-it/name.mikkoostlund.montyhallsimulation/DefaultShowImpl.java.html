@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>DefaultShowImpl.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Monty Hall simulation</a> &gt; <a href="index.source.html" class="el_package">name.mikkoostlund.montyhallsimulation</a> &gt; <span class="el_source">DefaultShowImpl.java</span></div><h1>DefaultShowImpl.java</h1><pre class="source lang-java linenums">package name.mikkoostlund.montyhallsimulation;
+
+import java.util.List;
+
+public class DefaultShowImpl implements Show {
+
+	private static final int DEFAULT_NUMBER_OF_DOORS = 3;
+	private ShowHelper showHelper;
+	private int numberOfDoors;
+
+	/**
+	 * Creates an instance of {@link Show} that uses 3 doors. Each time a show is run, 
+	 * one of the doors is picked at random to contain a car.
+	 */
+	public DefaultShowImpl() {
+<span class="nc" id="L16">		this(new DefaultShowHelper(), DEFAULT_NUMBER_OF_DOORS);</span>
+<span class="nc" id="L17">	}</span>
+
+	/**
+	 * Creates an instance of {@link Show} that uses 3 doors. Each time a show is run, 
+	 * the supplied ShowHelper is used to generate the set of doors and decide which door should 
+	 * contain the car.
+	 * @param showHelper
+	 */
+	public DefaultShowImpl(ShowHelper showHelper) {
+<span class="nc" id="L26">		this(showHelper, DEFAULT_NUMBER_OF_DOORS);</span>
+<span class="nc" id="L27">	}</span>
+
+	/**
+	 * Creates an instance of {@link Show} that uses {@code numberOfDoors} doors. Each time a show is run, 
+	 * one of the doors is picked at random to contain a car.
+	 * @param numberOfDoors 
+	 */
+	public DefaultShowImpl(int numberOfDoors) {
+<span class="nc" id="L35">		this(new DefaultShowHelper(), numberOfDoors);</span>
+<span class="nc" id="L36">	}</span>
+
+	/**
+	 * Creates an instance of {@link Show} that uses {@code numberOfDoors} doors.Each time a show is run, 
+	 * the supplied ShowHelper is used to generate the set of doors and decide which door should 
+	 * contain the car.
+	 * @param showHelper
+	 * @param numberOfDoors 
+	 */
+<span class="fc" id="L45">	public DefaultShowImpl(ShowHelper showHelper, int numberOfDoors) {</span>
+<span class="fc" id="L46">		this.showHelper = showHelper;</span>
+<span class="fc" id="L47">		this.numberOfDoors = numberOfDoors;</span>
+<span class="fc" id="L48">	}</span>
+
+	/**
+	 * Runs a single show.
+	 * @param showContestant the contestant taking part in the show.
+	 * @param showWatcher a watcher which watches the show and receives information
+	 * about its outcome.
+	 * @param showHelper the guy that is responsible for setting up a set of doors; 
+	 * one door with a car behind, the remaing doors with goats behind.
+	 * @return the result of the show - either a {@link ShowResult#WIN} (meaning that the 
+	 * contestant won a car) or a {@link ShowResult#LOSE} (meaning that the contestant 
+	 * lost - although he &quot;won&quot; a goat).
+	 */
+	public ShowOutcome runWith(ShowContestant showContestant) {
+		/*
+		 *  Prepare for show time - set up the doors! 
+		 */
+<span class="fc" id="L65">		Doors doors = showHelper.setupDoors(numberOfDoors);</span>
+
+		// Let contestant choose a door.
+<span class="fc" id="L68">		int index = showContestant.makeInitialDoorChoice(doors.getDoorIndexes(DoorMatcher.anyDoor()));</span>
+<span class="fc" id="L69">		Door doorChosenByContestant = doors.getDoor(index);</span>
+
+		//  Host opens another door (than the one chosen by the contestant), which
+		//+ has a goat behind it.
+<span class="fc" id="L73">		Door doorOpenedByHost = doors.getDoor(DoorMatcher.doorWithGoat()</span>
+<span class="fc" id="L74">		                                                  .not(doorChosenByContestant));</span>
+
+		//  The remaining doors - i.e. all doors except the one chosen by the contestant 
+		//+ and the one opened by the host - are eligible for the contestant to switch to.
+<span class="fc" id="L78">		List&lt;Integer&gt; doorsThatContestantMaySwitchTo = </span>
+<span class="fc" id="L79">				doors.getDoorIndexes(DoorMatcher.anyDoor()</span>
+<span class="fc" id="L80">				                                .not(doorChosenByContestant)</span>
+<span class="fc" id="L81">				                                .not(doorOpenedByHost));</span>
+
+		// Let the contestant switch to the other door, if he wants.
+<span class="fc" id="L84">		int index2 = showContestant.makeSecondDoorChoice(doorChosenByContestant.index(), doorsThatContestantMaySwitchTo);</span>
+<span class="fc" id="L85">		doorChosenByContestant = doors.getDoor(index2);</span>
+
+		// If there is a goat behind the chosen door, the contestant lost.
+<span class="fc bfc" id="L88" title="All 2 branches covered.">		if (false == doorChosenByContestant.hasCar()) {</span>
+<span class="fc" id="L89">			return ShowOutcome.LOSE;</span>
+		}
+
+		// The contestant won a car!
+<span class="fc" id="L93">		return ShowOutcome.WIN;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

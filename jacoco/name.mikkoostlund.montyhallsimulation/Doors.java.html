@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Doors.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Monty Hall simulation</a> &gt; <a href="index.source.html" class="el_package">name.mikkoostlund.montyhallsimulation</a> &gt; <span class="el_source">Doors.java</span></div><h1>Doors.java</h1><pre class="source lang-java linenums">package name.mikkoostlund.montyhallsimulation;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Set;
+
+/**
+ * A Doors instance abstracts the set of doors in a Monty Hall show.
+ * A Doors instance contains instances of {@link Door}, where 
+ * exactly one Door &quot;has a car&quot; (its {@link Door#hasCar() hasCar} method returns &lt;code&gt;true&lt;/code&gt;) 
+ * and each of the remaining ones &quot;has a goat&quot; (its {@link Door#hasCar() hasCar} method 
+ * returns &lt;code&gt;false&lt;/code&gt;).
+ * @author mikko
+ *
+ */
+<span class="pc bpc" id="L18" title="1 of 2 branches missed.">public class Doors  {</span>
+
+<span class="fc" id="L20">	private final List&lt;Door&gt; doors = new ArrayList&lt;&gt;();</span>
+
+	/**
+	 * @param indexOfDoorWithCar the index of the door that has a car behind it. Must be non-negative and less than {@code numberOfDoors}.
+	 * @param numberOfDoors the total number of doors. Must be non-negative.
+	 */
+<span class="fc" id="L26">	public Doors(final int indexOfDoorWithCar, int numberOfDoors) {</span>
+<span class="fc" id="L27">		validate(numberOfDoors, indexOfDoorWithCar);</span>
+
+<span class="fc bfc" id="L29" title="All 2 branches covered.">		for (int i = 0; i &lt; numberOfDoors; i++) {</span>
+<span class="fc" id="L30">			final int doorIndex = i;</span>
+<span class="fc" id="L31">			doors.add(new Door() {</span>
+				
+				@Override
+				public int index() {
+<span class="fc" id="L35">					return doorIndex;</span>
+				}
+				
+				@Override
+				public boolean hasCar() {
+<span class="fc bfc" id="L40" title="All 2 branches covered.">					return doorIndex == indexOfDoorWithCar;</span>
+				}
+			});
+		}
+
+<span class="fc" id="L45">		assertInvariant();</span>
+<span class="fc" id="L46">	}</span>
+
+	private void validate(int numberOfDoors, final int indexOfCarDoor) {
+<span class="fc bfc" id="L49" title="All 4 branches covered.">		if (indexOfCarDoor &lt; 0 || indexOfCarDoor &gt;= numberOfDoors) {</span>
+<span class="fc" id="L50">			throw new IllegalArgumentException(&quot;indexOfCarDoor = &quot;+ indexOfCarDoor +&quot;, numberOfDoors = &quot;+ numberOfDoors +&quot;; required: 0 &lt;= indexOfCarDoor &lt; numberOfDoors&quot;);</span>
+		}
+<span class="fc" id="L52">	}</span>
+
+	private void assertInvariant() {
+<span class="fc" id="L55">		assertNoNullDoors();</span>
+<span class="fc" id="L56">		assertDistinct();</span>
+<span class="fc" id="L57">		assertExactlyOneHasCar();</span>
+<span class="fc" id="L58">	}</span>
+
+	private void assertNoNullDoors() {
+<span class="fc bfc" id="L61" title="All 2 branches covered.">		for (Door door: doors) {</span>
+<span class="pc bpc" id="L62" title="2 of 4 branches missed.">			assert door != null; </span>
+<span class="fc" id="L63">		}</span>
+<span class="fc" id="L64">	}</span>
+
+	private void assertDistinct() {
+<span class="fc" id="L67">		Set&lt;Door&gt; set = new HashSet&lt;&gt;();</span>
+<span class="fc" id="L68">		set.addAll(doors);</span>
+<span class="pc bpc" id="L69" title="2 of 4 branches missed.">		assert set.size() == doors.size();</span>
+<span class="fc" id="L70">	}</span>
+
+	private void assertExactlyOneHasCar() {
+<span class="fc" id="L73">		int cars = 0;</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		for (Door door : doors) {</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">			if (door.hasCar()) {</span>
+<span class="fc" id="L76">				cars++;</span>
+			}
+<span class="fc" id="L78">		}</span>
+<span class="pc bpc" id="L79" title="2 of 4 branches missed.">		assert cars == 1;</span>
+<span class="fc" id="L80">	}</span>
+
+	/**
+	 * Returns the lowest-indexed &lt;code&gt;Door&lt;/code&gt; instance within this &lt;code&gt;Doors&lt;/code&gt;, 
+	 * which is matched by the specified &lt;code&gt;DoorMatcher&lt;/code&gt;. If there is no instance 
+	 * matched by the specified &lt;code&gt;DoorMatcher&lt;/code&gt;, a &lt;code&gt;NoSuchElementException&lt;/code&gt; 
+	 * is thrown.  
+	 * @param matcher a &lt;code&gt;DoorMatcher&lt;/code&gt; which specifies the &lt;code&gt;Door&lt;/code&gt; within 
+	 * this &lt;code&gt;Doors&lt;/code&gt; to retrieve. 
+	 * @return a &lt;code&gt;Door&lt;/code&gt; instance, which is contained in this &lt;code&gt;Doors&lt;/code&gt; 
+	 * and which is matched by the specified &lt;code&gt;DoorMatcher&lt;code&gt;.
+	 * @throws NoSuchElementException if no &lt;code&gt;Door&lt;/code&gt; instance within
+	 * this &lt;code&gt;Doors&lt;/code&gt; instance is matched by the specified &lt;code&gt;DoorMatcher&lt;/code&gt;.
+	 */
+	Door getDoor(DoorMatcher matcher) {
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		for (Door door: doors) {</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">			if (matcher.matches(door)) {</span>
+<span class="fc" id="L97">				return door;</span>
+			}
+<span class="fc" id="L99">		}</span>
+<span class="fc" id="L100">		throw new NoSuchElementException();</span>
+	}
+
+	/**
+	 * @return the number of {@link Door} instances contained by this &lt;code&gt;Doors&lt;/code&gt; instance.
+	 */
+	public int numberOfDoors() {
+<span class="fc" id="L107">		return doors.size();</span>
+	}
+
+	/**
+	 * @param index the index of the &lt;code&gt;Door&lt;/code&gt; to retrieve.
+	 * @return the &lt;code&gt;Door&lt;/code&gt; instance at index &lt;code&gt;index&lt;/code&gt; within this 
+	 * &lt;code&gt;Doors&lt;/code&gt; instance.
+	 */
+	public Door getDoor(int index) {
+<span class="fc" id="L116">		return doors.get(index);</span>
+	}
+
+	public List&lt;Integer&gt; getDoorIndexes(DoorMatcher doorMatcher) {
+<span class="fc" id="L120">		List &lt;Integer&gt; doorIndexes = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L121" title="All 2 branches covered.">		for (int i = 0; i &lt; doors.size(); i++) {</span>
+<span class="fc bfc" id="L122" title="All 2 branches covered.">			if (doorMatcher.matches(doors.get(i))) {</span>
+<span class="fc" id="L123">				doorIndexes.add(i);</span>
+			}
+		}
+<span class="fc" id="L126">		return doorIndexes;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>

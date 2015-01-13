@@ -1,20 +1,15 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-Monty Hall simulation,com.monty.minisimulation,MontyMain,195,0,9,0,34,0,10,0,5,0
-Monty Hall simulation,com.monty.minisimulation,MontyMain.new MontyMain.Args() {...},9,0,0,0,2,0,2,0,2,0
-Monty Hall simulation,com.monty.minisimulation,MontyExperiment.Registrator.ContestantStatistics,10,76,3,7,0,16,3,6,0,4
-Monty Hall simulation,com.monty.minisimulation,MontyMain.SwitchingContestant,18,0,0,0,4,0,3,0,3,0
-Monty Hall simulation,com.monty.minisimulation,ShowOutcome,9,29,0,0,0,2,2,2,2,2
-Monty Hall simulation,com.monty.minisimulation,MontyMain.KeepingContestant,6,0,0,0,3,0,2,0,2,0
-Monty Hall simulation,com.monty.minisimulation,MontyExperiment.Registrator.new MontyExperiment.ShowStatistics() {...},4,31,2,2,2,7,2,3,0,3
-Monty Hall simulation,com.monty.minisimulation,MontyExperiment,0,49,0,4,0,12,0,4,0,2
-Monty Hall simulation,com.monty.minisimulation,MontyExperiment.Registrator,0,36,0,2,0,10,0,4,0,3
-Monty Hall simulation,com.monty.minisimulation,Doors.new Door() {...},0,24,0,2,0,3,0,4,0,3
-Monty Hall simulation,com.monty.minisimulation,DefaultShowHelper,20,0,0,0,4,0,2,0,2,0
-Monty Hall simulation,com.monty.minisimulation,Doors,40,163,10,24,3,40,11,17,1,10
-Monty Hall simulation,com.monty.minisimulation,DoorMatcher,4,20,0,0,1,5,1,4,1,4
-Monty Hall simulation,com.monty.minisimulation,DoorMatcher.new DoorMatcher() {...},6,0,0,0,2,0,2,0,2,0
-Monty Hall simulation,com.monty.minisimulation,DefaultShowImpl,0,57,0,2,0,18,0,3,0,2
-Monty Hall simulation,com.monty.minisimulation,DoorMatcher.new DoorMatcher() {...},0,25,0,4,0,2,0,4,0,2
-Monty Hall simulation,com.monty.minisimulation,MontyMain.ShowContestantBase,26,0,0,0,7,0,3,0,3,0
-Monty Hall simulation,com.monty.minisimulation,DoorMatcher.new DoorMatcher() {...},0,5,0,0,0,2,0,2,0,2
-Monty Hall simulation,com.monty.minisimulation,DoorMatcher.new DoorMatcher() {...},0,10,0,2,0,2,0,3,0,2
+Monty Hall simulation,name.mikkoostlund.montyhallsimulation,DoorMatcher,4,20,0,0,1,5,1,4,1,4
+Monty Hall simulation,name.mikkoostlund.montyhallsimulation,Doors.new Door() {...},0,24,0,2,0,3,0,4,0,3
+Monty Hall simulation,name.mikkoostlund.montyhallsimulation,DefaultShowImpl,19,57,0,2,6,18,3,3,3,2
+Monty Hall simulation,name.mikkoostlund.montyhallsimulation,ShowOutcome,9,29,0,0,0,2,2,2,2,2
+Monty Hall simulation,name.mikkoostlund.montyhallsimulation,MontyExperiment.Registrator.new MontyExperiment.ShowStatistics() {...},4,31,2,2,2,7,2,3,0,3
+Monty Hall simulation,name.mikkoostlund.montyhallsimulation,MontyExperiment,8,49,0,4,2,12,1,4,1,2
+Monty Hall simulation,name.mikkoostlund.montyhallsimulation,MontyExperiment.Registrator,0,36,0,2,0,10,0,4,0,3
+Monty Hall simulation,name.mikkoostlund.montyhallsimulation,Doors,40,163,10,24,3,40,11,17,1,10
+Monty Hall simulation,name.mikkoostlund.montyhallsimulation,DoorMatcher.new DoorMatcher() {...},0,25,0,4,0,2,0,4,0,2
+Monty Hall simulation,name.mikkoostlund.montyhallsimulation,DoorMatcher.new DoorMatcher() {...},6,0,0,0,2,0,2,0,2,0
+Monty Hall simulation,name.mikkoostlund.montyhallsimulation,MontyExperiment.Registrator.ContestantStatistics,10,76,3,7,0,16,3,6,0,4
+Monty Hall simulation,name.mikkoostlund.montyhallsimulation,DoorMatcher.new DoorMatcher() {...},0,10,0,2,0,2,0,3,0,2
+Monty Hall simulation,name.mikkoostlund.montyhallsimulation,DoorMatcher.new DoorMatcher() {...},0,5,0,0,0,2,0,2,0,2
+Monty Hall simulation,name.mikkoostlund.montyhallsimulation,DefaultShowHelper,19,0,0,0,4,0,2,0,2,0

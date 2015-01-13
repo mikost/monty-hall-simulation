@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>MontyExperiment.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Monty Hall simulation</a> &gt; <a href="index.source.html" class="el_package">name.mikkoostlund.montyhallsimulation</a> &gt; <span class="el_source">MontyExperiment.java</span></div><h1>MontyExperiment.java</h1><pre class="source lang-java linenums">package name.mikkoostlund.montyhallsimulation;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
+public class MontyExperiment {
+
+	public interface ShowStatistics {
+
+		int getOutcomeCount(ShowOutcome showOutcome, ShowContestant showContestant);
+
+		int getShowCount(ShowContestant showContestant);
+
+	}
+
+	private final Show show;
+	private final int times;
+	private final Collection&lt;? extends ShowContestant&gt; showContestants;
+
+<span class="nc" id="L21">	public MontyExperiment(Show show, int times, Collection&lt;? extends ShowContestant&gt; showContestants) {</span>
+<span class="nc" id="L22">		this.show = show;</span>
+<span class="nc" id="L23">		this.times = times;</span>
+<span class="nc" id="L24">		this.showContestants = showContestants;</span>
+<span class="nc" id="L25">	}</span>
+
+	public MontyExperiment(int timesToRunShow, Collection&lt;? extends ShowContestant&gt; showContestants) {
+<span class="nc" id="L28">		this(new DefaultShowImpl(), timesToRunShow, showContestants);</span>
+<span class="nc" id="L29">	}</span>
+
+	public ShowStatistics run() {
+<span class="nc" id="L32">		Registrator registrator = new Registrator();</span>
+
+<span class="nc bnc" id="L34" title="All 2 branches missed.">		for (ShowContestant showContestant : showContestants) {	</span>
+<span class="nc bnc" id="L35" title="All 2 branches missed.">			for (int time = 0; time &lt; times; time++) {</span>
+<span class="nc" id="L36">				ShowOutcome showOutcome = show.runWith(showContestant);</span>
+<span class="nc" id="L37">				registrator.registerOutcome(showContestant, showOutcome);</span>
+			}
+<span class="nc" id="L39">		}</span>
+		
+<span class="nc" id="L41">		return registrator.getShowStatistics();</span>
+	}
+
+<span class="nc" id="L44">	private static class Registrator {</span>
+<span class="nc" id="L45">		private final Map&lt;ShowContestant, ContestantStatistics&gt; statistics = new HashMap&lt;&gt;();</span>
+
+		public void registerOutcome(ShowContestant showContestant, ShowOutcome showOutcome) {
+<span class="nc" id="L48">			ContestantStatistics contestantStatistics = statistics.get(showContestant);</span>
+<span class="nc bnc" id="L49" title="All 2 branches missed.">			if (contestantStatistics == null) {</span>
+<span class="nc" id="L50">				contestantStatistics = new ContestantStatistics();</span>
+<span class="nc" id="L51">				statistics.put(showContestant, contestantStatistics);</span>
+			}
+<span class="nc" id="L53">			contestantStatistics.registerOutcome(showOutcome);</span>
+<span class="nc" id="L54">		}</span>
+
+		public ShowStatistics getShowStatistics() {
+<span class="nc" id="L57">			return new ShowStatistics() {</span>
+
+				@Override
+				public int getOutcomeCount(ShowOutcome showOutcome, ShowContestant showContestant) {
+<span class="nc" id="L61">					ContestantStatistics contestantStatistics = statistics.get(showContestant);</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">					if (contestantStatistics == null) {</span>
+<span class="nc" id="L63">						return 0;</span>
+					}
+<span class="nc" id="L65">					return contestantStatistics.getOutcomeCount(showOutcome);</span>
+				}
+
+				@Override
+				public int getShowCount(ShowContestant showContestant) {
+<span class="nc" id="L70">					ContestantStatistics contestantStatistics = statistics.get(showContestant);</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">					if (contestantStatistics == null) {</span>
+<span class="nc" id="L72">						return 0;</span>
+					}
+<span class="nc" id="L74">					return contestantStatistics.getShowCount();</span>
+				}
+				
+			};
+		}
+
+<span class="nc" id="L80">		private static class ContestantStatistics {</span>
+
+<span class="nc" id="L82">			private final HashMap&lt;ShowOutcome, Integer&gt; outcomes = new HashMap&lt;&gt;();</span>
+
+			public int getShowCount() {
+<span class="nc" id="L85">				int showCount = 0;</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">				for (ShowOutcome showOutcome : outcomes.keySet()) {</span>
+<span class="nc" id="L87">					showCount += outcomes.get(showOutcome).intValue();</span>
+<span class="nc" id="L88">				}</span>
+<span class="nc" id="L89">				return showCount;</span>
+			}
+
+			public int getOutcomeCount(ShowOutcome showOutcome) {
+<span class="nc bnc" id="L93" title="All 2 branches missed.">				if (showOutcome == null) throw new NullPointerException();</span>
+
+<span class="nc" id="L95">				Integer count = outcomes.get(showOutcome);</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">				return count == null ? 0 : count.intValue();</span>
+			}
+
+			public void registerOutcome(ShowOutcome showOutcome) {
+<span class="nc bnc" id="L100" title="All 2 branches missed.">				if (showOutcome == null) throw new NullPointerException();</span>
+
+<span class="nc" id="L102">				Integer count = outcomes.get(showOutcome);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">				if (count == null) {</span>
+<span class="nc" id="L104">					outcomes.put(showOutcome, 1);</span>
+				} else {
+<span class="nc" id="L106">					outcomes.put(showOutcome, count + 1);</span>
+				}
+<span class="nc" id="L108">			}</span>
+
+		}
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.2.201409121644</span></div></body></html>
