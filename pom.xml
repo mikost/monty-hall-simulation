@@ -5,6 +5,7 @@
   <version>0-SNAPSHOT</version>
   <name>Monty Hall simulation</name>
   <description>A simulation of the Monty Hall show</description>
+  <url>http://mikost.github.io/monty-hall-simulation</url>
 
   <scm>
     <connection>scm:git:git@github.com:mikost/monty-hall-simulation.git</connection>
