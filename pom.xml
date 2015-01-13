@@ -7,9 +7,9 @@
   <description>A simulation of the Monty Hall show</description>
 
   <scm>
-    <connection>scm:git:ssh://github.com/mikost/monty-hall-simulation.git</connection>
+    <connection>scm:git:git@github.com:mikost/monty-hall-simulation.git</connection>
     <url>https://github.com/mikost/monty-hall-simulation</url>
-    <developerConnection>scm:git:ssh://github.com/mikost/monty-hall-simulation.git</developerConnection>
+    <developerConnection>scm:git:git@github.com:mikost/monty-hall-simulation.git</developerConnection>
     <tag>HEAD</tag>
   </scm>
 
