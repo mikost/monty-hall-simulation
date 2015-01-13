@@ -9,20 +9,17 @@ import com.monty.minisimulation.MontyExperiment.ShowStatistics;
 
 public class MontyMain {
 
-	private static final int NUMBER_OF_DOORS = 3;
 	private static final int DEFAULT_TIMES = 1000;
 
 	public static void main(String[] args) {
 		int timesToRunShow = parse(args).getTimesToRunShow();
-
-		Show show = new DefaultShowImpl(new DefaultShowHelper(), NUMBER_OF_DOORS);
 
 		Collection<ShowContestantBase> showContestants = Arrays.asList(
 				new KeepingContestant("KEEPING_CONTESTANT"),
 				new SwitchingContestant("SWITCHING_CONTESTANT")
 		);
 
-		MontyExperiment montyExperiment = new MontyExperiment(show, timesToRunShow, showContestants);
+		MontyExperiment montyExperiment = new MontyExperiment(timesToRunShow, showContestants);
 
 		ShowStatistics showStatistics = montyExperiment.run();
 

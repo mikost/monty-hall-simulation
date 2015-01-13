@@ -24,6 +24,10 @@ public class MontyExperiment {
 		this.showContestants = showContestants;
 	}
 
+	public MontyExperiment(int timesToRunShow, Collection<? extends ShowContestant> showContestants) {
+		this(new DefaultShowImpl(), timesToRunShow, showContestants);
+	}
+
 	public ShowStatistics run() {
 		Registrator registrator = new Registrator();
 

@@ -4,11 +4,41 @@ import java.util.List;
 
 public class DefaultShowImpl implements Show {
 
+	private static final int DEFAULT_NUMBER_OF_DOORS = 3;
 	private ShowHelper showHelper;
 	private int numberOfDoors;
 
 	/**
-	 * Creates an instance of {@link MontyShow}.
+	 * Creates an instance of {@link Show} that uses 3 doors. Each time a show is run, 
+	 * one of the doors is picked at random to contain a car.
+	 */
+	public DefaultShowImpl() {
+		this(new DefaultShowHelper(), DEFAULT_NUMBER_OF_DOORS);
+	}
+
+	/**
+	 * Creates an instance of {@link Show} that uses 3 doors. Each time a show is run, 
+	 * the supplied ShowHelper is used to generate the set of doors and decide which door should 
+	 * contain the car.
+	 * @param showHelper
+	 */
+	public DefaultShowImpl(ShowHelper showHelper) {
+		this(showHelper, DEFAULT_NUMBER_OF_DOORS);
+	}
+
+	/**
+	 * Creates an instance of {@link Show} that uses {@code numberOfDoors} doors. Each time a show is run, 
+	 * one of the doors is picked at random to contain a car.
+	 * @param numberOfDoors 
+	 */
+	public DefaultShowImpl(int numberOfDoors) {
+		this(new DefaultShowHelper(), numberOfDoors);
+	}
+
+	/**
+	 * Creates an instance of {@link Show} that uses {@code numberOfDoors} doors.Each time a show is run, 
+	 * the supplied ShowHelper is used to generate the set of doors and decide which door should 
+	 * contain the car.
 	 * @param showHelper
 	 * @param numberOfDoors 
 	 */
