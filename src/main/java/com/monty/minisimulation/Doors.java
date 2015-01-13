@@ -20,16 +20,10 @@ public class Doors  {
 	private final List<Door> doors = new ArrayList<>();
 
 	/**
-	 * Constructs a <code>Doors</code> instance
-	 * @param door0 the <code>Door</code> at index 0.
-	 * @param door1 the <code>Door</code> at index 1.
-	 * @param door2 the <code>Door</code> at index 2.
-	 * @throws NullPointerException if any argument is null
-	 * @throws IllegalArgumentException if any two arguments 
-	 * refer to the same <code>Door</code> instance or if not
-	 * exactly one of the <code>Door</code>s "has a car behind it".
+	 * @param indexOfDoorWithCar the index of the door that has a car behind it. Must be non-negative and less than {@code numberOfDoors}.
+	 * @param numberOfDoors the total number of doors. Must be non-negative.
 	 */
-	public Doors(String dummy, final int indexOfDoorWithCar, int numberOfDoors) {
+	public Doors(final int indexOfDoorWithCar, int numberOfDoors) {
 		validate(numberOfDoors, indexOfDoorWithCar);
 
 		for (int i = 0; i < numberOfDoors; i++) {

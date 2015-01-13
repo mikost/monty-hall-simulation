@@ -51,7 +51,7 @@ public class MontyExperimentIT {
 			@Override
 			public Doors setupDoors(int numberOfDoors) {
 				assertThat(numberOfDoors, is(equalTo(wantedNumberOfDoors)));
-				Doors doors = new Doors(null, indexOfDoorWithCar, numberOfDoors);
+				Doors doors = new Doors(indexOfDoorWithCar, numberOfDoors);
 				indexOfDoorWithCar ++;
 				if (indexOfDoorWithCar == wantedNumberOfDoors) {
 					indexOfDoorWithCar = 0;

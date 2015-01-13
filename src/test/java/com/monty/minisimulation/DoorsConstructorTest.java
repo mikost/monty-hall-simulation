@@ -81,7 +81,7 @@ public class DoorsConstructorTest {
 
 	@Test
 	public void testDoorsConstructor() {
-		new Doors("dummy", indexOfCarDoor, numberOfDoors);
+		new Doors(indexOfCarDoor, numberOfDoors);
 	}
 
 }

@@ -24,7 +24,7 @@ public class DoorsTest {
 
 	@Before
 	public void setup() {
-		doors = new Doors("", 2, 3);
+		doors = new Doors(2, 3);
 	}
 
 	@Test
@@ -47,7 +47,7 @@ public class DoorsTest {
 	@Test
 	public void testThatNumberOfDoorsReturnsNumberOfDoors() {
 		for (int numberOfDoors = 1; numberOfDoors < 10; numberOfDoors++) {
-			assertThat(new Doors("", 0, numberOfDoors).numberOfDoors(), is(equalTo(numberOfDoors)));
+			assertThat(new Doors(0, numberOfDoors).numberOfDoors(), is(equalTo(numberOfDoors)));
 		}
 	}
 
@@ -67,7 +67,7 @@ public class DoorsTest {
 	public void testThatRequestedCarDoorHasCarAndOtherDoorsHaveNot() {
 		final int numberOfDoors = 3;
 		for (int carIndex = 0; carIndex < numberOfDoors; carIndex++) {
-			Doors doors = new Doors("", carIndex, numberOfDoors);
+			Doors doors = new Doors(carIndex, numberOfDoors);
 		
 			for (int i = 0; i < numberOfDoors; i++) {
 				assertThat("new Doors("+carIndex+", "+numberOfDoors+").getDoor("+i+").hasCar()", 
@@ -80,7 +80,7 @@ public class DoorsTest {
 	public void testThatExactlyOneDoorHasCar() {
 		for (int nDoors = 3; nDoors < 10; nDoors++) {
 			for (int carIndex = 0; carIndex < nDoors; carIndex++) {
-				Doors doors = new Doors("", carIndex, nDoors);
+				Doors doors = new Doors(carIndex, nDoors);
 				assertThat("number of cars in new Doors("+ carIndex +","+nDoors+")", 
 						numberOfCarsIn(doors), is(equalTo(1)));
 			}

@@ -8,7 +8,7 @@ public class DefaultShowHelper implements ShowHelper {
 	public Doors setupDoors(int numberOfDoors) {
 		int indexOfDoorWithCar = r.nextInt(numberOfDoors);
 
-		return new Doors("dummy", indexOfDoorWithCar, numberOfDoors);
+		return new Doors(indexOfDoorWithCar, numberOfDoors);
 	}
 
 }

@@ -12,7 +12,7 @@ public class DoorMatcherTest {
 
 	@Before
 	public void setup() {
-		Doors doors = new Doors(null, 0, 3);
+		Doors doors = new Doors(0, 3);
 		doorWithCar = doors.getDoor(0);
 		doorWithGoat = doors.getDoor(1);
 	}

@@ -88,7 +88,7 @@ public class MontyShowTest {
 
 		@Override
 		public Doors setupDoors(int numberOfDoors) {
-			return new Doors("", indexOfDoorWithCar, numberOfDoors);
+			return new Doors(indexOfDoorWithCar, numberOfDoors);
 		}
 	}
 
