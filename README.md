@@ -23,7 +23,7 @@ To try it out, run the following command lines (except the '$'s) in a terminal w
         [WARNING] Failed to retrieve plugin descriptor for org.eclipse.m2e:lifecycle-mapping:1.0.0: Plugin org.eclipse.m2e:lifecycle-mapping:1.0.0 or one of its dependencies could not be resolved: Failure to find org.eclipse.m2e:lifecycle-mapping:jar:1.0.0 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced
         [INFO] 
         [INFO] --- exec-maven-plugin:1.4.0:java (default-cli) @ monty-hall-simulation ---
-        `*The simulation was run 1000 times.*`
+        `**The simulation was run 1000 times.**`
 > **Using the "switch door strategy", the contestant won 670 times.**
 > *Using the "keep door strategy", the contestant won 317 times.**
         [INFO] ------------------------------------------------------------------------
