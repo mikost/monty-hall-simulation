@@ -43,3 +43,12 @@ To try it out, run the following command lines (except the '$'s) in a terminal w
         [INFO] Finished at: 2015-05-06T15:49:42+02:00
         [INFO] Final Memory: 12M/212M
         [INFO] ------------------------------------------------------------------------
+
+In the above output text the lines output by the simulation program are: 
+
+        The simulation was run 1000 times.
+        Using the "switch door strategy", the contestant won 670 times.
+        Using the "keep door strategy", the contestant won 317 times.
+
+which clearly shows that, for a contestant in a Monty Hall show, the "switch door strategy" is superior to the  
+"keep door strategy".
