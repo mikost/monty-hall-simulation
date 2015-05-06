@@ -3,6 +3,7 @@ monty-hall-simulation
 
 A program that verifies that it is statistically beneficial to switch doors in the Monty Hall problem.
 
+###Try it!
 To try it out, run the following command lines (except the '$'s) in a terminal window:
 
         $ git clone https://github.com/mikost/monty-hall-simulation
@@ -10,7 +11,7 @@ To try it out, run the following command lines (except the '$'s) in a terminal w
         $ mvn clean package
         $ mvn exec:java -Dexec.mainClass=name.mikkoostlund.montyhallsimulation.MontySimMain
 
-Example output:
+####Example output:
         [INFO] Scanning for projects...
         [WARNING] The POM for org.eclipse.m2e:lifecycle-mapping:jar:1.0.0 is missing, no dependency information available
         [WARNING] Failed to retrieve plugin descriptor for org.eclipse.m2e:lifecycle-mapping:1.0.0: Plugin org.eclipse.m2e:lifecycle-mapping:1.0.0 or one of its dependencies could not be resolved: Failure to find org.eclipse.m2e:lifecycle-mapping:jar:1.0.0 in https://repo.maven.apache.org/maven2 was cached in the local repository, resolution will not be reattempted until the update interval of central has elapsed or updates are forced
