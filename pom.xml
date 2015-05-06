@@ -23,8 +23,8 @@
   </distributionManagement>
 
   <properties>
-  	<maven.compiler.source>1.7</maven.compiler.source>
-  	<maven.compiler.target>1.7</maven.compiler.target>
+  	<maven.compiler.source>1.8</maven.compiler.source>
+  	<maven.compiler.target>1.8</maven.compiler.target>
 	<scm-publish.scmBranch>gh-pages</scm-publish.scmBranch>  
 	<scm-publish.pubScmUrl>scm:git:git@github.com:mikost/monty-hall-simulation.git</scm-publish.pubScmUrl>
 	<scm-publish.siteDocOuputDirectory>${project.build.directory}/site</scm-publish.siteDocOuputDirectory>
