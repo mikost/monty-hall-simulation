@@ -6,7 +6,7 @@ A program that verifies that it is statistically beneficial to switch doors in t
 To try it out, run the following command lines (except the '$'s) in a terminal window:
 
         $ git clone https://github.com/mikost/monty-hall-simulation
-        $ cd Slider-Puzzle/
+        $ cd monty-hall-simulation
         $ mvn clean package
         $ mvn exec:java -Dexec.mainClass=name.mikkoostlund.montyhallsimulation.MontySimMain
 
