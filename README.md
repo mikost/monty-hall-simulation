@@ -24,8 +24,8 @@ To try it out, run the following command lines (except the '$'s) in a terminal w
         [INFO] ------------------------------------------------------------------------
         [INFO] Building Monty Hall simulation 0-SNAPSHOT
         [INFO] ------------------------------------------------------------------------
-        [WARNING] The POM for org.eclipse.m2e:lifecycle-mapping:jar:1.0.0 is missing, no dependency information  
-        available
+        [WARNING] The POM for org.eclipse.m2e:lifecycle-mapping:jar:1.0.0 is missing, no dependency  
+        information available
         [WARNING] Failed to retrieve plugin descriptor for org.eclipse.m2e:lifecycle-mapping:1.0.0: Plugin  
         org.eclipse.m2e:lifecycle-mapping:1.0.0 or one of its dependencies could not be resolved:  
         Failure to find org.eclipse.m2e:lifecycle-mapping:jar:1.0.0 in https://repo.maven.apache.org/maven2  
